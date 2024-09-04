@@ -84,13 +84,10 @@ export default function TodoList() {
     syncReactToLocal(handler)
   }
   const handleDoneTodo = (id: string, done: boolean) => {
-    setTodos((prev) => {
-      return prev.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, done }
-        }
-        return todo
-      })
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((todo) => (todo.id === id ? { ...todo, done } : todo))
+      syncReactToLocal(() => updatedTodos)
+      return updatedTodos
     })
   }
   return (
